@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liam - Software Engineer</title>
+    <style>
+        :root {
+            --color-background: #0D1117;
+            --color-surface: #161B22;
+            --color-primary: #58A6FF;
+            --color-text-primary: #E6EDF3;
+            --color-text-secondary: #8B949E;
+            --color-border: #21262D;
+            --color-shadow: rgba(0, 0, 0, 0.4);
+
+            --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+
+            --font-size-base: 16px;
+            --line-height-base: 1.6;
+
+            --spacing-unit: 1rem;
+
+            --corner-radius-small: 4px;
+            --corner-radius-medium: 8px;
+            --corner-radius-large: 16px;
+
+            --transition-speed: 0.3s;
+            --transition-ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: var(--font-size-base);
+        }
+
+        body {
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            font-family: var(--font-family-sans);
+            line-height: var(--line-height-base);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        main {
+            padding-top: 80px; /* Offset for fixed header */
+        }
+
+        h1, h2, h3 {
+            color: var(--color-text-primary);
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); }
+        h2 { font-size: clamp(2rem, 4vw, 2.5rem); }
+        h3 { font-size: 1.25rem; }
+
+        p {
+            margin-bottom: var(--spacing-unit);
+            color: var(--color-text-secondary);
+            max-width: 65ch;
+        }
+
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: color var(--transition-speed) var(--transition-ease);
+        }
+
+        a:hover {
+            color: white;
+        }
+
+        .section-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: calc(var(--spacing-unit) * 6) calc(var(--spacing-unit) * 2);
+        }
+
+        .main-header {
+            position: fixed;
+            top: var(--spacing-unit);
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 2 * var(--spacing-unit));
+            max-width: 1200px;
+            z-index: 100;
+        }
+
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.5);
+            background: rgba(22, 27, 34, 0.7);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid var(--color-border);
+            border-radius: var(--corner-radius-medium);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--color-text-primary);
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 calc(var(--spacing-unit) * 2);
+            margin-top: -80px; /* Counteract main padding */
+        }
+
+        .hero-headline {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(90deg, #fff, #aaa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: var(--spacing-unit);
+        }
+
+        .hero-subheadline {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto calc(var(--spacing-unit) * 3) auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--color-primary);
+            color: var(--color-background);
+            padding: var(--spacing-unit) calc(var(--spacing-unit) * 2);
+            border-radius: var(--corner-radius-small);
+            font-weight: 500;
+            transition: transform var(--transition-speed) var(--transition-ease), background-color var(--transition-speed) var(--transition-ease);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            background-color: #79c0ff;
+            color: var(--color-background);
+        }
+
+        .content-section {
+            border-top: 1px solid var(--color-border);
+        }
+
+        #about .section-container, #contact .section-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .content-section h2 {
+            text-align: center;
+            margin-bottom: calc(var(--spacing-unit) * 4);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-unit);
+        }
+
+        .skill-card {
+            background-color: var(--color-surface);
+            padding: var(--spacing-unit);
+            border: 1px solid var(--color-border);
+            border-radius: var(--corner-radius-medium);
+            text-align: center;
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+            transition: transform var(--transition-speed) var(--transition-ease), box-shadow var(--transition-speed) var(--transition-ease);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--color-shadow);
+            border-color: rgba(88, 166, 255, 0.3);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .project-card {
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--corner-radius-large);
+            padding: calc(var(--spacing-unit) * 2);
+            transition: transform var(--transition-speed) var(--transition-ease), box-shadow var(--transition-speed) var(--transition-ease), border-color var(--transition-speed) var(--transition-ease);
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px var(--color-shadow);
+            border-color: rgba(88, 166, 255, 0.5);
+        }
+
+        .project-card h3 {
+            margin-bottom: var(--spacing-unit);
+            color: var(--color-primary);
+        }
+
+        .main-footer-bottom {
+            text-align: center;
+            padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 2);
+            border-top: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-links {
+            margin-top: var(--spacing-unit);
+            display: flex;
+            justify-content: center;
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .footer-links a {
+            color: var(--color-text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            main { padding-top: 0; }
+            .main-header {
+                position: relative;
+                transform: translateX(0);
+                left: 0;
+                top: 0;
+                width: 100%;
+                max-width: 100%;
+                border-radius: 0;
+            }
+            .main-nav {
+                border-radius: 0;
+            }
+            .hero-section {
+                min-height: 80vh;
+                 margin-top: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-nav {
+                flex-direction: column;
+                gap: var(--spacing-unit);
+                padding-top: var(--spacing-unit);
+                padding-bottom: var(--spacing-unit);
+            }
+             .main-nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* Animation Styles */
+        .content-section,
+        .skill-card,
+        .project-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s var(--transition-ease), transform 0.6s var(--transition-ease);
+        }
+
+        .content-section.is-visible,
+        .skill-card.is-visible,
+        .project-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <nav class="main-nav">
+            <a href="#" class="logo">Liam.</a>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-headline">Creative Software Engineer</h1>
+                <p class="hero-subheadline">Building elegant and efficient solutions for the web.</p>
+                <a href="#projects" class="cta-button">View My Work</a>
+            </div>
+        </section>
+
+        <section id="about" class="content-section">
+            <div class="section-container">
+                <h2>About Me</h2>
+                <p>I'm Liam, a passionate software engineer with a knack for creating beautiful, functional, and user-centric digital experiences. With a strong foundation in computer science and years of hands-on experience, I specialize in turning complex problems into elegant, efficient code. My goal is to build software that not only works flawlessly but is also a joy to use.</p>
+            </div>
+        </section>
+
+        <section id="skills" class="content-section">
+            <div class="section-container">
+                <h2>Core Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-card">JavaScript (ES6+)</div>
+                    <div class="skill-card">React & Next.js</div>
+                    <div class="skill-card">Node.js</div>
+                    <div class="skill-card">Python</div>
+                    <div class="skill-card">HTML5 & CSS3</div>
+                    <div class="skill-card">SQL & NoSQL</div>
+                    <div class="skill-card">Docker</div>
+                    <div class="skill-card">Cloud Platforms (AWS/GCP)</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="content-section">
+            <div class="section-container">
+                <h2>Featured Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <h3>Project One</h3>
+                        <p>A brief description of the project, its purpose, and the technologies used.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Project Two</h3>
+                        <p>A brief description of the project, its purpose, and the technologies used.</p>
+                    </div>
+                    <div class="project-card">
+                        <h3>Project Three</h3>
+                        <p>A brief description of the project, its purpose, and the technologies used.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="content-section">
+            <div class="section-container">
+                <h2>Get In Touch</h2>
+                <p>I'm currently open to new opportunities. Feel free to reach out.</p>
+                <a href="mailto:liam.engineer@example.com" class="cta-button">Say Hello</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer-bottom">
+        <p>&copy; 2024 Liam. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">GitHub</a>
+            <a href="#">LinkedIn</a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Intersection Observer for scroll animations ---
+            const animatedElements = document.querySelectorAll('.content-section, .skill-card, .project-card');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            animatedElements.forEach(element => {
+                // Add a staggered delay for card elements
+                if (element.classList.contains('skill-card') || element.classList.contains('project-card')) {
+                    const delay = Math.random() * 400; // Random delay up to 400ms
+                    element.style.transitionDelay = `${delay}ms`;
+                }
+                observer.observe(element);
+            });
+
+            // --- Hero section mouse move effect ---
+            const heroContent = document.querySelector('.hero-content');
+            const heroSection = document.querySelector('.hero-section');
+
+            if (window.matchMedia("(min-width: 769px)").matches) {
+                heroSection.addEventListener('mousemove', (e) => {
+                    const { clientX, clientY } = e;
+                    const { offsetWidth, offsetHeight } = heroSection;
+
+                    const xPos = (clientX / offsetWidth - 0.5) * 2; // Range: -1 to 1
+                    const yPos = (clientY / offsetHeight - 0.5) * 2; // Range: -1 to 1
+
+                    const xOffset = -xPos * 10; // Adjust multiplier for effect strength
+                    const yOffset = -yPos * 10;
+
+                    // Use a transition on the hero content for smoothness
+                    heroContent.style.transition = 'transform 0.1s linear';
+                    heroContent.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
